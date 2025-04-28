@@ -21,7 +21,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ['/callall', '/help']
     ]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    await update.message.reply_text('Salom! Bot ishlayapti. Tanlang komandalardan:', reply_markup=reply_markup)
+    await update.message.reply_text('Nima gap! Bot ishlayapti. Tanlang komandalardan otam:', reply_markup=reply_markup)
 
 async def is_user_admin(update: Update) -> bool:
     user_id = update.effective_user.id
