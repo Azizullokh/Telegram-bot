@@ -1,6 +1,6 @@
 import logging
 import asyncio
-from telegram import Update
+from telegram import Update, ReplyKeyboardMarkup
 from telegram.constants import ParseMode
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
@@ -17,7 +17,11 @@ logging.basicConfig(
 )
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Salom! Bot ishlayapti. /callall deb yozing odamlarni chaqirish uchun.")
+    keyboard = [
+        ['/callall', '/help']
+    ]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    await update.message.reply_text('Salom! Bot ishlayapti. Tanlang komandalardan:', reply_markup=reply_markup)
 
 async def is_user_admin(update: Update) -> bool:
     user_id = update.effective_user.id
@@ -41,7 +45,7 @@ async def callall(update: Update, context: ContextTypes.DEFAULT_TYPE):
         chunk = usernames[i:i + chunk_size]
         text = ' '.join(chunk)
         await context.bot.send_message(chat_id=chat_id, text=text, parse_mode=ParseMode.HTML)
-        await asyncio.sleep(2) 
+        await asyncio.sleep(2)
 
 def main():
     app = ApplicationBuilder().token(TOKEN).build()
